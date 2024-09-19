@@ -1,6 +1,7 @@
 package vn.hoaitan.models;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class UserModel implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -10,12 +11,24 @@ public class UserModel implements Serializable {
     private String fullname;
     private String password;
     private String image;
-    private int roleid ;
+    private int roleid;
     private String phone;
-    private String createdate;
+    private Date datecreate;
 
     public UserModel() {
         super();
+    }
+
+    public UserModel(int id, String username, String email, String fullname, String password, String image, int roleid, String phone, Date datecreate) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.fullname = fullname;
+        this.password = password;
+        this.image = image;
+        this.roleid = roleid;
+        this.phone = phone;
+        this.datecreate = datecreate;
     }
 
     public int getId() {
@@ -82,12 +95,12 @@ public class UserModel implements Serializable {
         this.phone = phone;
     }
 
-    public String getCreatedate() {
-        return createdate;
+    public Date getdatecreate() {
+        return datecreate;
     }
 
-    public void setCreatedate(String createdate) {
-        this.createdate = createdate;
+    public void setdatecreate(Date datecreate) {
+        this.datecreate = datecreate;
     }
 
     @Override
@@ -101,7 +114,7 @@ public class UserModel implements Serializable {
                 ", image='" + image + '\'' +
                 ", roleid=" + roleid +
                 ", phone='" + phone + '\'' +
-                ", createdate='" + createdate + '\'' +
+                ", datecreate='" + datecreate + '\'' +
                 '}';
     }
 }
