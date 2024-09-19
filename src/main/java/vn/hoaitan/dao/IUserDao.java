@@ -14,4 +14,5 @@ public interface IUserDao {
     boolean checkExistEmail(String email);
     boolean checkExistUserName(String userName);
     boolean checkExistPhone(String phone);
+
 }
