@@ -102,17 +102,56 @@ public class UserDaoImp extends DBConnectMySQL implements IUserDao {
 
     @Override
     public boolean checkExistEmail(String email) {
-        return false;
+        boolean duplicate = false;
+        String query = "Select * FROM Users Where Email = ? ";
+        try{
+            conn = super.getDatabaseConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1,email);
+            if(rs.next()){
+                duplicate = true;
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return duplicate;
     }
 
     @Override
     public boolean checkExistUserName(String userName) {
-        return false;
+        boolean duplicate = false;
+        String query = "Select * FROM Users Where username = ? ";
+        try{
+            conn = super.getDatabaseConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1,userName);
+            if(rs.next()){
+                duplicate = true;
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return duplicate;
     }
 
     @Override
     public boolean checkExistPhone(String phone) {
-        return false;
+        boolean duplicate = false;
+        String query = "Select * FROM Users Where phone = ? ";
+        try{
+            conn = super.getDatabaseConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1,phone);
+            if(rs.next()){
+                duplicate = true;
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return duplicate;
     }
 
     public static void main(String[] args) {
