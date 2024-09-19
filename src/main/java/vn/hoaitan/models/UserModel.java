@@ -1,7 +1,7 @@
 package vn.hoaitan.models;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 public class UserModel implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -17,6 +17,17 @@ public class UserModel implements Serializable {
 
     public UserModel() {
         super();
+    }
+
+    public UserModel(String username, String email, String fullname, String password, String image, int roleid, String phone, Date datecreate) {
+        this.username = username;
+        this.email = email;
+        this.fullname = fullname;
+        this.password = password;
+        this.image = image;
+        this.roleid = roleid;
+        this.phone = phone;
+        this.datecreate = datecreate;
     }
 
     public UserModel(int id, String username, String email, String fullname, String password, String image, int roleid, String phone, Date datecreate) {

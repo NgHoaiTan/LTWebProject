@@ -10,4 +10,8 @@ public interface IUserDao {
     List<UserModel> findAll();
 
     void insertUser(UserModel user);
+
+    boolean checkExistEmail(String email);
+    boolean checkExistUserName(String userName);
+    boolean checkExistPhone(String phone);
 }

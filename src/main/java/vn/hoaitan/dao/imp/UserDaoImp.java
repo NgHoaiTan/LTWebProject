@@ -5,13 +5,9 @@ import vn.hoaitan.configs.DBConnectSQL;
 import vn.hoaitan.dao.IUserDao;
 import vn.hoaitan.models.UserModel;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 
 public class UserDaoImp extends DBConnectMySQL implements IUserDao {
 
@@ -39,7 +35,7 @@ public class UserDaoImp extends DBConnectMySQL implements IUserDao {
                 user.setImage(rs.getString("image"));
                 user.setRoleid(rs.getInt("roleid"));
                 user.setPhone(rs.getString("phone"));
-                user.setdatecreate(rs.getDate("createdate"));
+                user.setdatecreate(rs.getDate("datecreate"));
 
             }
 
@@ -82,21 +78,21 @@ public class UserDaoImp extends DBConnectMySQL implements IUserDao {
 
     @Override
     public void insertUser(UserModel user) {
-        String sql = "Insert INTO Users(id, username, password, email, fullname, image, roleid, phone, datecreate) " +
-                " Values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "Insert INTO Users(username, password, email, fullname, image, roleid, phone, datecreate) " +
+                " Values(?, ?, ?, ?, ?, ?, ?, ?)";
         try{
             conn = super.getDatabaseConnection(); // kết nối database
             ps = conn.prepareStatement(sql); // Ném câu lệnh sql vào cho thực thi
 
-            ps.setInt(1,user.getId());
-            ps.setString(2,user.getUsername());
-            ps.setString(3,user.getPassword());
-            ps.setString(4,user.getEmail());
-            ps.setString(5,user.getFullname());
-            ps.setString(6, user.getImage());
-            ps.setInt(7,user.getRoleid());
-            ps.setString(8,user.getPhone());
-            
+            ps.setString(1,user.getUsername());
+            ps.setString(2,user.getPassword());
+            ps.setString(3,user.getEmail());
+            ps.setString(4,user.getFullname());
+            ps.setString(5, user.getImage());
+            ps.setInt(6,user.getRoleid());
+            ps.setString(7,user.getPhone());
+            ps.setDate(8, user.getdatecreate());
+
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -104,11 +100,26 @@ public class UserDaoImp extends DBConnectMySQL implements IUserDao {
         }
     }
 
+    @Override
+    public boolean checkExistEmail(String email) {
+        return false;
+    }
+
+    @Override
+    public boolean checkExistUserName(String userName) {
+        return false;
+    }
+
+    @Override
+    public boolean checkExistPhone(String phone) {
+        return false;
+    }
+
     public static void main(String[] args) {
 
         try {
             IUserDao userDao = new UserDaoImp();
-            userDao.insertUser(new UserModel(2,"mynhk","admin123","mynhk@gmail.com","Nguyễn Hồ Kiều My",null,2,"0965276507",null));
+            //userDao.insertUser(new UserModel("mynhk","mynhk@gmail.com","admin123","admin123",null,2,"0965276507",null));
             List<UserModel> list = userDao.findAll();
 
             //System.out.println(userDao.findByUsername("tannh"));

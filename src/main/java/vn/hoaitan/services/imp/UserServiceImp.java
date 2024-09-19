@@ -3,9 +3,9 @@ package vn.hoaitan.services.imp;
 import vn.hoaitan.dao.IUserDao;
 import vn.hoaitan.dao.imp.UserDaoImp;
 import vn.hoaitan.models.UserModel;
-import vn.hoaitan.services.IUserSerivice;
+import vn.hoaitan.services.IUserService;
 
-public class UserService implements IUserSerivice {
+public class UserServiceImp implements IUserService {
     // Lấy toàn bộ hàm trong tầng Dao của User
     IUserDao userDao = new UserDaoImp();
 
