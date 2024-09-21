@@ -11,6 +11,18 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>Trang chủ của Manager</h1>
+<form action="/LTWebProject/logout" method="post">
+    <div class="container">
+        <header>
+            <h1>Trang Chủ</h1>
+        </header>
+        <div class="content">
+            <p>Chào mừng bạn đến với trang chủ của Manager!</p>
+        </div>
+        <div class="logout-button">
+            <button type="submit" class="btn-logout">Đăng xuất</button>
+        </div>
+    </div>
+</form>
 </body>
 </html>
