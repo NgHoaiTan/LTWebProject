@@ -13,7 +13,7 @@ import vn.hoaitan.utils.Constant;
 public class RegisterController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-       /* HttpSession session = req.getSession(false);
+        HttpSession session = req.getSession(false);
         if (session != null && session.getAttribute("username") != null) {
             resp.sendRedirect(req.getContextPath() + "/admin");
             return;
@@ -29,7 +29,7 @@ public class RegisterController extends HttpServlet {
                     return;
                 }
             }
-        }*/
+        }
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
