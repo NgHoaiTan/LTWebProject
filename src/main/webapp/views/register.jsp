@@ -8,121 +8,155 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Registration</title>
     <style>
-        /* Thiết lập chung cho toàn bộ trang */
+        /* Global Styles */
         body {
+            margin: 0;
+            padding: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #6a11cb, #2575fc);
+            background: linear-gradient(to right, #7f00ff, #e100ff);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            color: #fff;
         }
 
-        /* Container chứa form */
-        .form-container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            width: 400px;
-            color: #333;
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 500px;
         }
 
-        /* Tiêu đề của form */
-        .form-container h2 {
-            text-align: center;
-            color: #2575fc;
-            font-size: 24px;
+        .registration-box h2 {
             margin-bottom: 20px;
-        }
-
-        /* Style cho các nhãn label */
-        .form-container label {
-            font-size: 14px;
-            font-weight: bold;
-            color: #666;
-            margin-bottom: 5px;
-            display: inline-block;
-        }
-
-        /* Style cho các trường nhập liệu */
-        .form-container input[type="text"],
-        .form-container input[type="password"],
-        .form-container input[type="email"],
-        .form-container input[type="tel"] {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 14px;
+            font-size: 24px;
             color: #333;
+            text-align: center;
         }
 
-        /* Hiệu ứng khi người dùng focus vào trường nhập liệu */
-        .form-container input[type="text"]:focus,
-        .form-container input[type="password"]:focus,
-        .form-container input[type="email"]:focus,
-        .form-container input[type="tel"]:focus {
-            border-color: #6a11cb;
-            box-shadow: 0 0 8px rgba(106, 17, 203, 0.2);
-            outline: none;
+        .form-row {
+            display: flex;
+            justify-content: space-between;
         }
 
-        /* Style cho nút Submit */
-        .form-container input[type="submit"] {
-            width: 100%;
-            padding: 12px;
-            background-color: #2575fc;
-            border: none;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        .form-group {
+            width: 48%;
+        }
+
+        .form-group-role {
+            display: flex;
+            justify-content: space-around; /* Căn đều khoảng cách giữa các radio button */
+            align-items: center;
             margin-top: 10px;
         }
 
-        /* Hiệu ứng khi di chuột qua nút Submit */
-        .form-container input[type="submit"]:hover {
-            background-color: #6a11cb;
+        .role-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        /* Thêm khoảng cách giữa các phần tử */
-        .form-container input {
-            margin-bottom: 20px;
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .form-group-role label {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group-role input {
+            margin-right: 5px;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(to right, #7f00ff, #e100ff);
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .register-btn:hover {
+            opacity: 0.9;
         }
 
     </style>
 </head>
 <body>
 <form action="/LTWebProject/register" method="post">
-    <c:if test=
-                  "${alert !=null}">
+    <c:if test="${alert !=null}">
         <h3 class="alert alertdanger">${alert}</h3>
     </c:if>
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username" required><br><br>
 
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password" required><br><br>
+    <div class="container">
+        <div class="registration-box">
+            <h2>Registration</h2>
+            <form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" id="fullname" name="fullname" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="text" id="phone" name="phone" placeholder="Enter your number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" name="cPassword" placeholder="Confirm your password" required>
+                    </div>
+                </div>
+                <div class="form-group role-group">
+                    <%--@declare id="role"--%><label for="role">Role</label>
+                    <div class="form-group-role">
+                        <label><input type="radio" name="role" value="user" required> <b>User</b></label>
+                        <label><input type="radio" name="role" value="admin"> <b>Admin</b></label>
+                        <label><input type="radio" name="role" value="manager"> <b>Manager</b></label>
+                        <label><input type="radio" name="role" value="seller"> <b>Seller</b></label>
+                        <label><input type="radio" name="role" value="shipper"> <b>Shipper</b></label>
+                    </div>
+                </div>
+                <button type="submit" class="register-btn">Register</button>
+            </form>
+        </div>
+    </div>
 
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required><br><br>
-
-    <label for="fullname">Full Name:</label><br>
-    <input type="text" id="fullname" name="fullname" required><br><br>
-
-    <label for="phone">Phone Number:</label><br>
-    <input type="tel" id="phone" name="phone" required><br><br>
-
-    <input type="submit" value="Register">
 </form>
 </body>
 </html>

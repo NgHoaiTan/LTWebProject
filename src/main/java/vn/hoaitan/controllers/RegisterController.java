@@ -48,8 +48,28 @@ public class RegisterController extends HttpServlet {
         String email = req.getParameter("email");
         String fullname = req.getParameter("fullname");
         String phone = req.getParameter("phone");
+        String confirmPassword = req.getParameter("cPassword");
+        String role = req.getParameter("role");
+        int roleid = 1;
+        if (role.equals("admin"))
+            roleid = 2;
+        else if (role.equals("manager"))
+            roleid = 3;
+        else if (role.equals("seller"))
+            roleid = 4;
+        else
+            roleid = 5;
+
+
         IUserService service = new UserServiceImp();
         String alertMsg = "";
+        if(!password.equals(confirmPassword))
+        {
+            alertMsg = "ConfirmPassword không đúng!";
+            req.setAttribute("alert", alertMsg);
+            req.getRequestDispatcher(Constant.REGISTER).forward(req, resp);
+            return;
+        }
         if (service.checkExistEmail(email)) {
             alertMsg = "Email đã tồn tại!";
             req.setAttribute("alert", alertMsg);
@@ -63,7 +83,7 @@ public class RegisterController extends HttpServlet {
             req.getRequestDispatcher(Constant.REGISTER).forward(req, resp);
             return;
         }
-        boolean isSuccess = service.register(username, password, email, fullname, phone);
+        boolean isSuccess = service.register(username, password, email, fullname,roleid, phone);
         if (isSuccess) {
 //SendMail sm = new SendMail();
 //sm.sendMail(email, "Shopping.iotstar.vn", "Welcome to Shopping. Please Login to us service. Thanks !");

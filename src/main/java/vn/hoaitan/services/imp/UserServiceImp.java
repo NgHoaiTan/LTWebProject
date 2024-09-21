@@ -26,13 +26,13 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public boolean register(String userName, String password, String email, String fullName, String phone) {
+    public boolean register(String userName, String password, String email, String fullName,int roleid, String phone) {
         if(this.checkExistUsername(userName)){
             return false;
         }
         long millis = System.currentTimeMillis();
         Date date = new Date(millis);
-        this.insertUser(new UserModel(userName,email,fullName,password,null,3,phone, date));
+        this.insertUser(new UserModel(userName,email,fullName,password,null,roleid,phone, date));
         return true;
     }
 
