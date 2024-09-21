@@ -108,6 +108,7 @@ public class UserDaoImp extends DBConnectMySQL implements IUserDao {
             conn = super.getDatabaseConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1,email);
+            rs = ps.executeQuery();
             if(rs.next()){
                 duplicate = true;
             }
@@ -126,6 +127,7 @@ public class UserDaoImp extends DBConnectMySQL implements IUserDao {
             conn = super.getDatabaseConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1,userName);
+            rs = ps.executeQuery();
             if(rs.next()){
                 duplicate = true;
             }
@@ -144,6 +146,7 @@ public class UserDaoImp extends DBConnectMySQL implements IUserDao {
             conn = super.getDatabaseConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1,phone);
+            rs = ps.executeQuery();
             if(rs.next()){
                 duplicate = true;
             }
@@ -158,15 +161,15 @@ public class UserDaoImp extends DBConnectMySQL implements IUserDao {
 
         try {
             IUserDao userDao = new UserDaoImp();
-            //userDao.insertUser(new UserModel("mynhk","mynhk@gmail.com","admin123","admin123",null,2,"0965276507",null));
             List<UserModel> list = userDao.findAll();
 
             //System.out.println(userDao.findByUsername("tannh"));
-
-
-            for(UserModel user : list)
+            if(userDao.checkExistEmail("tannh3108@gmail.com"))
             {
-                System.out.println(user);
+                System.out.println("Exist");
+            }
+            else {
+                System.out.println("New");
             }
 
 
