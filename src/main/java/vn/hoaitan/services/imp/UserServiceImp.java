@@ -1,11 +1,16 @@
 package vn.hoaitan.services.imp;
 
+import vn.hoaitan.configs.DBConnectMySQL;
 import vn.hoaitan.dao.IUserDao;
 import vn.hoaitan.dao.imp.UserDaoImp;
 import vn.hoaitan.models.UserModel;
 import vn.hoaitan.services.IUserService;
+import vn.hoaitan.utils.Constant;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class UserServiceImp implements IUserService {
     // Lấy toàn bộ hàm trong tầng Dao của User
@@ -54,5 +59,21 @@ public class UserServiceImp implements IUserService {
     @Override
     public void insertUser(UserModel userModel) {
         userDao.insertUser(userModel);
+    }
+
+    @Override
+    public boolean updatePassword(String email, String password) throws SQLException {
+        try {
+            String sql = "Update Users Set password = ? WHERE email = ?";
+            Connection conn = DBConnectMySQL.getDatabaseConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1,password);
+            ps.setString(2,email);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

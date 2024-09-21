@@ -2,6 +2,8 @@ package vn.hoaitan.services;
 
 import vn.hoaitan.models.UserModel;
 
+import java.sql.SQLException;
+
 public interface IUserService {
     UserModel login(String username, String password);
 
@@ -11,4 +13,6 @@ public interface IUserService {
     boolean checkExistUsername(String username);
     boolean checkExistPhone(String phone);
     void insertUser(UserModel userModel);
+
+    boolean updatePassword(String email, String password) throws SQLException;
 }
