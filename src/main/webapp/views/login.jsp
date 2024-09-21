@@ -134,6 +134,15 @@
         .social-buttons button:hover {
             opacity: 0.8;
         }
+        .signup-link {
+            color: #cccccc;
+            font-style: italic;
+            margin-top: 20px;
+            display: block;
+        }
+        .signup-link:hover, .forgot-password:hover {
+            text-decoration: underline;
+        }
 
     </style>
 </head>
@@ -163,9 +172,10 @@
                         <label>
                             <input type="checkbox" name="remember"> Remember me
                         </label>
-                        <a href="#" class="forgot-password">Forgot Password?</a>
+                        <a href="/LTWebProject/forgotPassword" class="forgot-password">Forgot Password?</a>
                     </div>
                     <button type="submit" class="btn-login">Login</button>
+                    <a href="/LTWebProject/register" class="signup-link">Don't have an account? Sign up</a>
                 </form>
                 <div class="social-login">
                     <p>or</p>
