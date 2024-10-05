@@ -11,89 +11,52 @@ import vn.hoaitan.utils.Constant;
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = {"/register"})
 public class RegisterController extends HttpServlet {
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        HttpSession session = req.getSession(false);
-        if (session != null && session.getAttribute("username") != null) {
-            resp.sendRedirect(req.getContextPath() + "/admin");
-            return;
-
-        }
-        Cookie[] cookies = req.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("username")) {
-                    session = req.getSession(true);
-                    session.setAttribute("username", cookie.getValue());
-                    resp.sendRedirect(req.getContextPath() + "/admin");
-                    return;
-                }
-            }
-        }
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        String email = req.getParameter("email");
-        String fullname = req.getParameter("fullname");
-        String phone = req.getParameter("phone");
-        req.getRequestDispatcher(Constant.REGISTER).forward(req, resp);
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("views/register.jsp").forward(req, resp);
     }
 
-    @SuppressWarnings("static-access")
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
         req.setCharacterEncoding("UTF-8");
         String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        String email = req.getParameter("email");
         String fullname = req.getParameter("fullname");
-        String phone = req.getParameter("phone");
-        String confirmPassword = req.getParameter("cPassword");
-        String role = req.getParameter("role");
-        int roleid = 1;
-        if (role.equals("admin"))
-            roleid = 2;
-        else if (role.equals("manager"))
-            roleid = 3;
-        else if (role.equals("seller"))
-            roleid = 4;
-        else
-            roleid = 5;
-
-
+        String password = req.getParameter("psw");
+        String password_repeat = req.getParameter("psw-repeat");
+        String email = req.getParameter("email");
+        int roleid = Integer.parseInt(req.getParameter("roleid"));
         IUserService service = new UserServiceImp();
         String alertMsg = "";
-        if(!password.equals(confirmPassword))
-        {
-            alertMsg = "ConfirmPassword không đúng!";
-            req.setAttribute("alert", alertMsg);
-            req.getRequestDispatcher(Constant.REGISTER).forward(req, resp);
-            return;
-        }
         if (service.checkExistEmail(email)) {
             alertMsg = "Email đã tồn tại!";
             req.setAttribute("alert", alertMsg);
-            req.getRequestDispatcher(Constant.REGISTER).forward(req, resp);
+            req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
             return;
         }
         if (service.checkExistUsername(username)) {
-            alertMsg =
-                    "Tài khoản đã tồn tại!";
+            alertMsg = "Tài khoản đã tồn tại!";
             req.setAttribute("alert", alertMsg);
-            req.getRequestDispatcher(Constant.REGISTER).forward(req, resp);
+            req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
             return;
         }
-        boolean isSuccess = service.register(username, password, email, fullname,roleid, phone);
-        if (isSuccess) {
-//SendMail sm = new SendMail();
-//sm.sendMail(email, "Shopping.iotstar.vn", "Welcome to Shopping. Please Login to us service. Thanks !");
+        if(!password.equals(password_repeat)) {
+            alertMsg = "Xác nhận mật khẩu không đúng";
             req.setAttribute("alert", alertMsg);
-            resp.sendRedirect(req.getContextPath() + "/login");
+            req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
+            return;
+        }
+        boolean isSuccess = service.register(username, email, fullname, password, roleid);
+        if (isSuccess) {
+            alertMsg = "Thành công";
+            req.setAttribute("alert", alertMsg);
+            resp.sendRedirect(req.getContextPath() + "/home");
         } else {
             alertMsg = "System error!";
             req.setAttribute("alert", alertMsg);
-            req.getRequestDispatcher(Constant.REGISTER).forward(req, resp);
+            req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
         }
+
     }
 
 }

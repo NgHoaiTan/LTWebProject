@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface IUserDao {
     UserModel findByUsername(String username);
-
+    UserModel findById(int id);
     List<UserModel> findAll();
-
     void insertUser(UserModel user);
-
+    boolean updatePassword(String username, String password);
+    boolean updateImage(String username, String imageName);
     boolean checkExistEmail(String email);
-    boolean checkExistUserName(String userName);
-    boolean checkExistPhone(String phone);
+    boolean checkExistUsername(String username);
+    UserModel findByUsernameAndEmail(String username, String email);
 
 }

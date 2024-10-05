@@ -1,165 +1,129 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: HoaiTan
-  Date: 19/09/2024
-  Time: 11:10 CH
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@taglib prefix="fmt" uri="jakarta.tags.fmt" %>
-<%@taglib prefix="fn" uri="jakarta.tags.functions"%>
 <html>
 <head>
-    <title>Registration</title>
+    <title>Register</title>
     <style>
-        /* Global Styles */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #7f00ff, #e100ff);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+        * {box-sizing: border-box}
 
+        /* Add padding to containers */
         .container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            padding: 40px;
-            width: 500px;
-        }
-
-        .registration-box h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
-            text-align: center;
-        }
-
-        .form-row {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .form-group {
-            width: 48%;
-        }
-
-        .form-group-role {
-            display: flex;
-            justify-content: space-around; /* Căn đều khoảng cách giữa các radio button */
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .role-group {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-            font-weight: bold;
-        }
-
-        .form-group input {
+            padding: 16px;
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-            margin-bottom: 15px;
+            max-width: 600px;
+            margin: auto;
         }
 
-        .form-group-role label {
-            display: flex;
-            align-items: center;
-        }
-
-        .form-group-role input {
-            margin-right: 5px;
-        }
-
-        .register-btn {
+        /* Full-width input fields */
+        input[type=text], input[type=password] {
             width: 100%;
-            padding: 10px;
-            background: linear-gradient(to right, #7f00ff, #e100ff);
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
             border: none;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 15px;
+            background: #f1f1f1;
         }
 
-        .register-btn:hover {
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+        /* Overwrite default styles of hr */
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        /* Set a style for the submit/register button */
+        .registerbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
             opacity: 0.9;
         }
 
+        .registerbtn:hover {
+            opacity:1;
+        }
+
+        /* Add a blue text color to links */
+        a {
+            color: dodgerblue;
+        }
+
+        /* Set a grey background color and center the text of the "sign in" section */
+        .signin {
+            background-color: #f1f1f1;
+            text-align: center;
+        }
+        .roles {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .roles label {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
 <form action="/LTWebProject/register" method="post">
-    <c:if test="${alert !=null}">
-        <h3 class="alert alertdanger">${alert}</h3>
-    </c:if>
+
 
     <div class="container">
-        <div class="registration-box">
-            <h2>Registration</h2>
-            <form>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="fullname">Full Name</label>
-                        <input type="text" id="fullname" name="fullname" placeholder="Enter your name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="text" id="phone" name="phone" placeholder="Enter your number" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm-password">Confirm Password</label>
-                        <input type="password" id="confirm-password" name="cPassword" placeholder="Confirm your password" required>
-                    </div>
-                </div>
-                <div class="form-group role-group">
-                    <%--@declare id="role"--%><label for="role">Role</label>
-                    <div class="form-group-role">
-                        <label><input type="radio" name="role" value="user" required> <b>User</b></label>
-                        <label><input type="radio" name="role" value="admin"> <b>Admin</b></label>
-                        <label><input type="radio" name="role" value="manager"> <b>Manager</b></label>
-                        <label><input type="radio" name="role" value="seller"> <b>Seller</b></label>
-                        <label><input type="radio" name="role" value="shipper"> <b>Shipper</b></label>
-                    </div>
-                </div>
-                <button type="submit" class="register-btn">Register</button>
-            </form>
+        <h1>Đăng ký</h1>
+        <p>Vui lòng điền vào mẫu này để tạo tài khoản.</p>
+        <hr>
+        <c:if test=
+                      "${alert !=null}">
+            <h3 class="alert alertdanger">${alert}</h3>
+        </c:if>
+        <label for="username"><b>User name</b></label>
+        <input type="text" placeholder="Điền Username" name="username" id="username" required>
+        <label for="username"><b>Họ và tên</b></label>
+        <input type="text" placeholder="Điền Họ và tên" name="fullname" id="fullname" required>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Điền Email" name="email" id="email" required>
+
+        <label for="psw"><b>Mật khẩu</b></label>
+        <input type="password" placeholder="Enter Mật khẩu" name="psw" id="psw" required>
+
+        <label for="psw-repeat"><b>Nhập lại mật khẩu</b></label>
+        <input type="password" placeholder="Nhập lại mật khẩu" name="psw-repeat" id="psw-repeat" required>
+        <hr>
+        <hr>
+
+        <p>Chọn nhiệm vụ:</p>
+        <div class="roles">
+            <label><input type="checkbox" name="roleid" value="1"> Admin</label>
+            <label><input type="checkbox" name="roleid" value="2"> Manager</label>
+            <label><input type="checkbox" name="roleid" value="3"> Seller</label>
+            <label><input type="checkbox" name="roleid" value="4"> Shipper</label>
+            <label><input type="checkbox" name="roleid" value="5"> User</label>
         </div>
+
+        <hr>
+        <button type="submit" class="registerbtn">Đăng ký</button>
     </div>
 
+    <div class="container signin">
+        <p>Bạn đã có tài khoản? <a href=${pageContext.request.contextPath }/login>Đăng nhập</a>.</p>
+    </div>
 </form>
 </body>
 </html>

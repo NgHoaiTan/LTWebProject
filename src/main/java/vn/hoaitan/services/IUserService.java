@@ -5,14 +5,13 @@ import vn.hoaitan.models.UserModel;
 import java.sql.SQLException;
 
 public interface IUserService {
+    UserModel findByUserName(String username);
     UserModel login(String username, String password);
-
-    UserModel FindByUserName(String username);
-    boolean register(String userName, String password, String email, String fullName,int roleid, String phone);
+    UserModel findByUserNameAndEmail(String username, String email);
+    boolean updatePassword(String username, String newPassword);
+    boolean updateImage(String username, String newIamge);
+    void insertUser(UserModel user);
+    boolean register(String username, String email, String fullname, String password, int roleid);
     boolean checkExistEmail(String email);
     boolean checkExistUsername(String username);
-    boolean checkExistPhone(String phone);
-    void insertUser(UserModel userModel);
-
-    boolean updatePassword(String email, String password) throws SQLException;
 }

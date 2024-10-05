@@ -14,7 +14,7 @@ public class DBConnectMySQL {
     private static String DRIVER = "com.mysql.cj.jdbc.Driver";
 
 
-    private static String URL = "jdbc:mysql://localhost:3307/LapTrinhWeb";
+    private static String URL = "jdbc:mysql://localhost:3307/LTWebProject";
 
 
 

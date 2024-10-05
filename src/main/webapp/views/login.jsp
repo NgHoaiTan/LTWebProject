@@ -1,192 +1,142 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: HoaiTan
-  Date: 19/09/2024
-  Time: 12:53 CH
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@taglib prefix="fmt" uri="jakarta.tags.fmt" %>
-<%@taglib prefix="fn" uri="jakarta.tags.functions"%>
+<%@taglib prefix="c" uri="jakarta.tags.core"%>
 <html>
 <head>
-    <title>Title</title>
+    <title>Login</title>
     <style>
-        /* Global Styles */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: url('https://www.w3schools.com/w3images/mountains.jpg') no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .login-box {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            width: 350px;
-            color: white;
-        }
-
-        .login-box h2 {
-            margin-bottom: 20px;
-            font-size: 26px;
-        }
-
-        .input-box {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .input-box input {
+        form {
+            border: 3px solid #f1f1f1;
             width: 100%;
-            padding: 10px 35px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 5px;
-            color: white;
-            font-size: 16px;
+            max-width: 600px;
+            margin: auto;
         }
 
-        .input-box .icon {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: white;
-            font-size: 20px;
-        }
-
-        .options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .options label {
-            font-size: 14px;
-        }
-
-        .options .forgot-password {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .btn-login {
-            background-color: #f63535;
-            color: white;
-            padding: 10px;
+        /* Full-width inputs */
+        input[type=text], input[type=password] {
             width: 100%;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
         }
 
-        .btn-login:hover {
-            background-color: #ff4545;
-        }
-
-        .social-login {
-            margin-top: 20px;
-        }
-
-        .social-login p {
+        /* Set a style for all buttons */
+        button {
+            background-color: #04AA6D;
             color: white;
-            margin-bottom: 10px;
-        }
-
-        .social-buttons {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        .social-buttons button {
-            background-color: #4267B2;
-            color: white;
-            padding: 10px 20px;
+            padding: 14px 20px;
+            margin: 8px 0;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            width: 100%;
         }
 
-        .btn-facebook {
-            background-color: #4267B2;
-        }
-
-        .btn-twitter {
-            background-color: #1DA1F2;
-        }
-
-        .social-buttons button:hover {
+        /* Add a hover effect for buttons */
+        button:hover {
             opacity: 0.8;
         }
-        .signup-link {
-            color: #cccccc;
-            font-style: italic;
-            margin-top: 20px;
-            display: block;
-        }
-        .signup-link:hover, .forgot-password:hover {
-            text-decoration: underline;
+
+        /* Extra style for the cancel button (red) */
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
         }
 
+        /* Center the avatar image inside this container */
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+        }
+
+        /* Avatar image */
+        img.avatar {
+            width: 40%;
+            border-radius: 50%;
+        }
+
+        /* Add padding to containers */
+        .container {
+            padding: 16px;
+        }
+
+        /* The "Forgot password" text */
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
-<form action="/LTWebProject/login" method="post">
-    <%--<div class="imgcontainer">
-        <img src="img_avatar2.png" alt="Avatar" class="avatar">
-    </div>
---%>
-        <c:if test=
-                      "${alert !=null}">
-            <h3 class="alert alertdanger">${alert}</h3>
-        </c:if>
-        <div class="login-container">
-            <div class="login-box">
-                <h2>Login</h2>
-                <form>
-                    <div class="input-box">
-                        <i class="fa fa-user icon"></i>
-                        <input type="text" name="username" placeholder="User name" required>
+<!-- BEGIN CONTENT -->
+<div class="col-md-9 col-sm-9">
+    <h1>Login</h1>
+    <div class="content-form-page">
+        <div class="row">
+            <div class="col-md-7 col-sm-7">
+                <form class="form-horizontal form-without-legend" role="form" method="post" action="/LTWebProject/login">
+
+                    <div class="form-group">
+                        <label for="uname" class="col-lg-4 control-label">Username <span class="require">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="uname" name="uname">
+                        </div>
                     </div>
-                    <div class="input-box">
-                        <i class="fa fa-lock icon"></i>
-                        <input type="password" name="password" placeholder="Password" required>
+                    <div class="form-group">
+                        <label for="psw" class="col-lg-4 control-label">Password <span class="require">*</span></label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="psw" name="psw">
+                        </div>
                     </div>
-                    <div class="options">
-                        <label>
-                            <input type="checkbox" name="remember"> Remember me
-                        </label>
-                        <a href="/LTWebProject/forgotPassword" class="forgot-password">Forgot Password?</a>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-offset-4 padding-left-0">
+                            <a href="page-forgotton-password.html">Forget Password?</a>
+                        </div>
                     </div>
-                    <button type="submit" class="btn-login">Login</button>
-                    <a href="/LTWebProject/register" class="signup-link">Don't have an account? Sign up</a>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-20">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-10 padding-right-30">
+                            <hr>
+                            <div class="login-socio">
+                                <p class="text-muted">or login using:</p>
+                                <ul class="social-icons">
+                                    <li><a href="#" data-original-title="facebook" class="facebook" title="facebook"></a></li>
+                                    <li><a href="#" data-original-title="Twitter" class="twitter" title="Twitter"></a></li>
+                                    <li><a href="#" data-original-title="Google Plus" class="googleplus" title="Google Plus"></a></li>
+                                    <li><a href="#" data-original-title="Linkedin" class="linkedin" title="LinkedIn"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </form>
-                <div class="social-login">
-                    <p>or</p>
-                    <div class="social-buttons">
-                        <button class="btn-facebook">Facebook</button>
-                        <button class="btn-twitter">Twitter</button>
-                    </div>
+            </div>
+            <div class="col-md-4 col-sm-4 pull-right">
+                <div class="form-info">
+                    <h2><em>Important</em> Information</h2>
+                    <p>Duis autem vel eum iriure at dolor vulputate velit esse vel molestie at dolore.</p>
+
+                    <button type="button" class="btn btn-default">More details</button>
                 </div>
             </div>
         </div>
-</form>
-
+    </div>
+</div>
+<!-- END CONTENT -->
 </body>
 </html>
