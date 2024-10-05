@@ -13,12 +13,16 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class UserServiceImp implements IUserService {
-    // Lấy toàn bộ hàm trong tầng Dao của User
     IUserDao userDao = new UserDaoImp();
 
     @Override
+    public UserModel findByUserName(String username) {
+        return userDao.findByUsername(username);
+    }
+
+    @Override
     public UserModel login(String username, String password) {
-        UserModel user = this.FindByUserName(username);
+        UserModel user = this.findByUserName(username);
         if (user != null && password.equals(user.getPassword())) {
             return user;
         }
@@ -26,18 +30,45 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public UserModel FindByUserName(String username) {
-        return userDao.findByUsername(username);
+    public UserModel findByUserNameAndEmail(String username, String email) {
+        return userDao.findByUsernameAndEmail(username, email);
     }
 
     @Override
-    public boolean register(String userName, String password, String email, String fullName,int roleid, String phone) {
-        if(this.checkExistUsername(userName)){
+    public boolean updatePassword(String username, String newPassword) {
+        return userDao.updatePassword(username, newPassword);
+    }
+
+    @Override
+    public boolean updateImage(String username, String newIamge) {
+        return userDao.updateImage(username, newIamge);
+    }
+
+    @Override
+    public void insertUser(UserModel user) {
+        userDao.insertUser(user);
+    }
+
+    @Override
+    public boolean register(String username, String email, String fullname, String password, int roleid) {
+        if(userDao.checkExistUsername(username)) {
             return false;
         }
+        if(userDao.checkExistEmail(email)) {
+            return false;
+        }
+        UserModel user = new UserModel();
+        user.setUsername(username);
+        user.setFullname(fullname);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setRoleid(roleid);
+
         long millis = System.currentTimeMillis();
-        Date date = new Date(millis);
-        this.insertUser(new UserModel(userName,email,fullName,password,null,roleid,phone, date));
+        java.sql.Date date = new java.sql.Date(millis);
+        user.setCreateDate(date);
+
+        this.insertUser(user);
         return true;
     }
 
@@ -48,32 +79,19 @@ public class UserServiceImp implements IUserService {
 
     @Override
     public boolean checkExistUsername(String username) {
-        return userDao.checkExistUserName(username);
+        return userDao.checkExistUsername(username);
     }
 
-    @Override
-    public boolean checkExistPhone(String phone) {
-        return userDao.checkExistPhone(phone);
-    }
-
-    @Override
-    public void insertUser(UserModel userModel) {
-        userDao.insertUser(userModel);
-    }
-
-    @Override
-    public boolean updatePassword(String email, String password) throws SQLException {
+    public static void main(String[] args) {
         try {
-            String sql = "Update Users Set password = ? WHERE email = ?";
-            Connection conn = DBConnectMySQL.getDatabaseConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1,password);
-            ps.setString(2,email);
-            ps.executeUpdate();
-        } catch (SQLException e) {
+            //long millis = System.currentTimeMillis();
+            //Date sqlDate = new Date(millis);
+            //System.out.print(sqlDate);
+            UserServiceImp userService = new UserServiceImp();
+            //System.out.println(userService.register("1123","ddd@gmail.com","1234",2));
+
+        } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 }
