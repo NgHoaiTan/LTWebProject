@@ -19,7 +19,7 @@ import java.util.List;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 10, // 10MB
         maxRequestSize = 1024 * 1024 * 50) // 50MB
-@WebServlet(urlPatterns = {"/admin/categories","/admin/category/add","/admin/category/insert","/admin/category/edit","/admin/category/update"})
+@WebServlet(urlPatterns = {"/admin/categories","/admin/category/add","/admin/category/insert","/admin/category/edit","/admin/category/update","/admin/category/delete"})
 public class CategoryController extends HttpServlet {
 
     public ICategoryService categoryService = new CategoryServiceImpl();
@@ -41,6 +41,10 @@ public class CategoryController extends HttpServlet {
             CategoryModel category = categoryService.findById(id);
             req.setAttribute("cate", category);
             req.getRequestDispatcher("/views/admin/category-edit.jsp").forward(req, resp);
+        } else if (url.contains("/admin/category/delete")) {
+            int id  = Integer.parseInt(req.getParameter("id"));
+            categoryService.delete((id));
+            req.getRequestDispatcher("/admin/categories").forward(req, resp);
         }
 
     }
@@ -60,7 +64,6 @@ public class CategoryController extends HttpServlet {
             // dua du lieu vao model
             CategoryModel category = new CategoryModel();
             category.setCategoryname(categoryName);
-            //category.setImage(image);
             category.setStatus(status);
 
             String fname = "";
@@ -72,14 +75,16 @@ public class CategoryController extends HttpServlet {
             try{
                 Part part = req.getPart("image1");
                 if(part.getSize() > 0){
-                    String fileName ="";
+                    String fileName =Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                    // Doi ten file
                     int index = fileName.lastIndexOf(".");
                     String ext = fileName.substring(index + 1);
                     fname = System.currentTimeMillis()+ "." + ext;
+                    // upload file
                     part.write(uploadPath+"/"+fname);
+                    // Ghi file vao data
                     category.setImage(fname);
-
-                } else if (image !=null) {
+                }else if (image !=null) {
                     category.setImage(image);
                 } else {
                     category.setImage("avatar.png");
@@ -94,20 +99,14 @@ public class CategoryController extends HttpServlet {
             // Tra ve view
             resp.sendRedirect(req.getContextPath()+"/admin/categories");
         } else if(url.contains("/admin/category/update")){
-
-            int categoryId = Integer.parseInt(req.getParameter("categoryid"));
-            String categoryName = req.getParameter("categoryname");
-            String image1 = req.getParameter("image1");
-            String image = req.getParameter("image");
-            int status = Integer.parseInt(req.getParameter("status"));
-
-            // dua du lieu vao model
             CategoryModel category = new CategoryModel();
-            CategoryModel cate = categoryService.findById(categoryId);
-            category.setCategoryname(categoryName);
-            //category.setImage(image);
-            category.setStatus(status);
-
+            int categoryid = Integer.parseInt(req.getParameter("categoryid"));
+            String categoryname = req.getParameter("categoryname");
+            int status = Integer.parseInt(req.getParameter("status"));
+            // Luu hinh anh cu
+            CategoryModel cateOld = categoryService.findById(categoryid);
+            String fileOld = cateOld.getImage();
+            // Upload file image
             String fname = "";
             String uploadPath = Constant.UPLOAD_DIRECTORY;
             File uploadDir = new File(uploadPath);
@@ -117,23 +116,29 @@ public class CategoryController extends HttpServlet {
             try{
                 Part part = req.getPart("image1");
                 if(part.getSize() > 0){
-                    String fileName ="";
+                    String fileName =Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                    // Doi ten file
                     int index = fileName.lastIndexOf(".");
                     String ext = fileName.substring(index + 1);
                     fname = System.currentTimeMillis()+ "." + ext;
+                    // upload file
                     part.write(uploadPath+"/"+fname);
+                    // Ghi file vao data
                     category.setImage(fname);
-
-                } else if (image !=null) {
-                    category.setImage(image);
                 } else {
-                    category.setImage("avatar.png");
+                    category.setImage(fileOld);
                 }
             }catch (Exception e)
             {
                 e.printStackTrace();
             }
-            categoryService.insert(category);
+
+
+            category.setCategoryid(categoryid);
+            category.setCategoryname(categoryname);
+            category.setStatus(status);
+            categoryService.update(category);
+
             // Tra ve view
             resp.sendRedirect(req.getContextPath()+"/admin/categories");
         }

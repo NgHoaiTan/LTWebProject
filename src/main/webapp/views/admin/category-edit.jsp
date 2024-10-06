@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/commons/taglib.jsp" %>
 
-<form action="<c:url value="/admin/category/update"/>" method="post" enctype="multipart/form-data">
+<form action="${pageContext.request.contextPath}/admin/category/update" method="post" enctype="multipart/form-data">
     <input type="text" id="categoryid" name="categoryid" value="${cate.categoryid}" hidden="hidden" >
     <label for="categoryname">Category name</label><br>
     <input type="text" id="categoryname" name="categoryname" value="${cate.categoryname}"><br>
@@ -16,11 +16,11 @@
         <c:url value="/image?fname=${cate.image}" var="imgUrl"></c:url>
     </c:if>
 
-    <td><img height="150" width="200" src="${imgUrl}"/></td>
+    <td><img height="150" width="200" src="${imgUrl}" id="imagess"/></td>
     <td>${cate.categoryname }</td><br>
 
     <label for="image">Upload file:</label><br>
-    <input type="file" id="image1" name="image1"> <br>
+    <input type="file" onchange="chooseFile(this) " id="image1" name="image1"> <br>
 
     <label for="status">Status:</label><br>
     <input type="radio" id=statuson" name="status" value="1" ${cate.status==1?'checked':''}>
