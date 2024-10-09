@@ -2,57 +2,142 @@ package vn.hoaitan.services.imp;
 
 import vn.hoaitan.dao.ICategoryDao;
 import vn.hoaitan.dao.imp.CategoryDaoImpl;
+import vn.hoaitan.entity.Category;
 import vn.hoaitan.models.CategoryModel;
 import vn.hoaitan.services.ICategoryService;
 
 import java.util.List;
 
 public class CategoryServiceImpl implements ICategoryService {
-    public ICategoryDao categoryDao = new CategoryDaoImpl();
+    ICategoryDao cateDao = new CategoryDaoImpl();
+
+
+
+
+
     @Override
-    public List<CategoryModel> findAll() {
-        return categoryDao.findAll();
+
+
+    public int count() {
+
+
+
+
+
+        return cateDao.count();
+
+
     }
 
+
+
     @Override
-    public CategoryModel findById(int id) {
-        return categoryDao.findById(id);
+
+
+    public List<Category> findAll(int page, int pagesize) {
+
+
+
+
+
+        return cateDao.findAll(page, pagesize);
+
+
     }
 
-    @Override
-    public CategoryModel findByName(String name) {
 
-        return categoryDao.findByName(name);
+
+    @Override
+
+
+    public List<Category> findByCategoryname(String catname) {
+
+
+
+
+
+        return cateDao.findByCategoryname(catname);
+
+
     }
 
-    @Override
-    public List<CategoryModel> searchByName(String keyword) {
-        return categoryDao.searchByName(keyword);
-    }
+
 
     @Override
-    public void insert(CategoryModel category) {
-        CategoryModel categoryModel = this.findByName(category.getCategoryname());
-        if (categoryModel.getCategoryname() == null) {
-            categoryDao.insert(category);
-        }
+
+
+    public List<Category> findAll() {
+
+
+
+
+
+        return cateDao.findAll();
+
+
     }
 
-    @Override
-    public void update(CategoryModel category) {
-        CategoryModel categoryModel = this.findByName(category.getCategoryname());
-        if (categoryModel != null) {
-            categoryDao.update(category);
-        }
-    }
+
 
     @Override
-    public void delete(int id) {
-        categoryDao.delete(id);
+
+
+    public Category findById(int cateid) {
+
+
+
+
+
+        return cateDao.findById(cateid);
+
+
     }
 
+
+
     @Override
-    public void updateStatus(int id, int status) {
-        categoryDao.updateStatus(id, status);
+
+
+    public void delete(int cateid) throws Exception {
+
+
+        cateDao.delete(cateid);
+
+
+
+
+
+    }
+
+
+
+    @Override
+
+
+    public void update(Category category) {
+
+
+        cateDao.update(category);
+
+
+
+
+
+    }
+
+
+
+    @Override
+
+
+    public void insert(Category category) {
+
+
+        cateDao.insert(category);
+
+
+
+
+
     }
 }

@@ -19,7 +19,6 @@ public class UserModel implements Serializable {
 
 
     public UserModel() {
-        super();
     }
 
 

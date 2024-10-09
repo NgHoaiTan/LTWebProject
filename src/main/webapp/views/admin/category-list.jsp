@@ -9,16 +9,16 @@
     <th>Status</th>
     <th>Action</th>
   </tr>
-  <c:forEach items="${listCate}" var="cate" varStatus="STT" >
+  <c:forEach items="${listcate}" var="cate" varStatus="STT" >
     <tr class="odd gradeX">
       <td>${STT.index+1 }</td>
 
-      <c:if test="${cate.image.substring(0,5) =='https'}">
-        <c:url value="${cate.image}" var = "imgUrl"></c:url>
+      <c:if test="${cate.images.substring(0,5) =='https'}">
+        <c:url value="${cate.images}" var = "imgUrl"></c:url>
       </c:if>
 
-      <c:if test="${cate.image.substring(0,5) !='https'}">
-        <c:url value="/image?fname=${cate.image}" var = "imgUrl"></c:url>
+      <c:if test="${cate.images.substring(0,5) !='https'}">
+        <c:url value="/image?fname=${cate.images}" var = "imgUrl"></c:url>
       </c:if>
 
       <td><img height="150" width="200" src="${imgUrl}" /></td>

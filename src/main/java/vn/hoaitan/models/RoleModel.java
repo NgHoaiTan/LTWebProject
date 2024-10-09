@@ -11,7 +11,7 @@ public class RoleModel implements Serializable{
     private String rolename;
 
     public RoleModel() {
-        super();
+
     }
 
     public int getRoleid() {

@@ -11,13 +11,9 @@
 <form action="<c:url value="/admin/category/insert"/>" method="post" enctype="multipart/form-data">
   <label for="categoryname">Category name</label><br>
   <input type="text" id="categoryname" name="categoryname"><br>
-
-  <label for="image">Images</label><br>
-  <input type="text" id="image" name="image"> <br>
-
-  <label for="image">Upload file:</label><br>
+  <label for="images">Upload file:</label><br>
   <img height="150" width="200" src="" id="imagess"/>
-  <input type="file" onchange="chooseFile(this)" id="image1" name="image1"> <br>
+  <input type="file" onchange="chooseFile(this)" id="images" name="images"> <br>
 
   <label for="status">Status:</label><br>
   <input type="radio" id=statuson" name="status" value="1">
